@@ -28,14 +28,29 @@ st.header("Chatbot : Streamlit + OpenAI")
 
 # Storing the chat
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = []
+    
+    def get_text():
+        input_text = st.text_input("You: ", "Hello, hi Chat Assist", key="input")
+        st.session_state['generated'] = []            
+        return input_text
+else: 
+    def get_text():
+        input_text = st.text_input("You: ", " ", key="input")            
+        return input_text
+    
+    
+    
+    
     
 if 'past' not in st.session_state:
     st.session_state['past'] = []
     
     
 def get_text():
-    input_text = st.text_input("You: ", "Hello, how are you?", key="input")
+    if not st.session_state['generated']:
+        input_text = st.text_input("You: ", "Hello, hi Chat Assist", key="input")
+    else:
+        input_text = st.text_input("You: ", " ", key="input")
     return input_text
 
 user_input = get_text()
